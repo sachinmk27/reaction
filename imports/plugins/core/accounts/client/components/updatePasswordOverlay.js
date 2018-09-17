@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { Components } from "@reactioncommerce/reaction-components";
 
+/* eslint-disable require-jsdoc */
+/* eslint-disable react/no-deprecated */
+
 class UpdatePasswordOverlay extends Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -93,7 +96,7 @@ class UpdatePasswordOverlay extends Component {
 
     if (type === "setPassword") {
       return (
-        <div className="col-sm-6">
+        <div>
           <Components.Button
             className="btn-block"
             primary={true}
@@ -107,14 +110,15 @@ class UpdatePasswordOverlay extends Component {
     }
 
     return (
-      <div className="col-sm-6">
+      <div>
         <Components.Button
           className="btn-block"
           primary={true}
           bezelStyle="solid"
-          i18nKeyLabel="accountsUI.updatePasswordAndContinue"
-          label="Update and continue"
+          i18nKeyLabel="accountsUI.submit"
+          label="Submit"
           type="submit"
+          disabled={this.props.isDisabled}
         />
       </div>
     );
@@ -152,19 +156,16 @@ class UpdatePasswordOverlay extends Component {
     return (
       <div>
         {this.props.isOpen === true &&
-        <div>
-          <div className="modal-backdrop fade in" id={`modal-backdrop-${this.props.uniqueId}`}/>
-          <div className="modal fade in" id={`modal-${this.props.uniqueId}`} style={{ display: "block" }}>
-            <div className="modal-dialog">
+          <div>
+            <div className="col-sm-4 col-sm-offset-4">
               {showSpinner ? this.renderSpinnerOnLoad() :
-                <form className="modal-content" onSubmit={this.handleSubmit}>
-                  <div className="modal-header">
-                    <h4 className="modal-title">
+                <form onSubmit={this.handleSubmit}>
+                  <div className="loginForm-title">
+                    <h2>
                       {this.renderPasswordResetText()}
-                    </h4>
+                    </h2>
                   </div>
-
-                  <div className="modal-body">
+                  <div>
                     <div className="login-form">
 
                       {this.renderFormMessages()}
@@ -181,32 +182,17 @@ class UpdatePasswordOverlay extends Component {
                         />
                         {this.renderPasswordErrors()}
                       </div>
-
                     </div>
                   </div>
 
-                  <div className="modal-footer">
+                  <div className="form-group">
                     {this.renderSpinnerOnWait()}
-
-                    <div className="col-sm-6">
-                      <Components.Button
-                        className="btn-block"
-                        status="danger"
-                        bezelStyle="solid"
-                        i18nKeyLabel="app.cancel"
-                        label="Cancel"
-                        type="button"
-                        onClick={this.handleCancel}
-                        disabled={this.props.isDisabled}
-                      />
-                    </div>
                   </div>
-
                 </form>
               }
             </div>
           </div>
-        </div>}
+        }
       </div>
     );
   }

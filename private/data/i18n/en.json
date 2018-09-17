@@ -642,7 +642,7 @@
         "signUpWithYourEmailAddress": "Register with your email address",
         "terms": "Terms of use",
         "updateYourPassword": "Update your password",
-        "updatePasswordAndContinue": "Update and continue",
+        "updatePasswordAndContinue": "Update",
         "updatedServiceConfiguration": "Updated service configuration for {{service}}",
         "username": "Username",
         "usernameOrEmail": "Username or email",
@@ -658,6 +658,7 @@
           "passwordChanged": "Password changed",
           "passwordReset": "Password reset",
           "passwordResetSend": "Email with password reset link has been sent.",
+          "passwordResetDone": "Password reset complete. Please return to app.",
           "invitationSent": "Invitation sent",
           "sendInvitation": "Send invitation"
         },

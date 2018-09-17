@@ -5,7 +5,7 @@ import Random from "@reactioncommerce/random";
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 import { Components, registerComponent } from "@reactioncommerce/reaction-components";
-import { Reaction } from "/client/api";
+import { Router, i18next } from "/client/api";
 import { LoginFormValidation } from "/lib/api";
 import UpdatePasswordOverlay from "../components/updatePasswordOverlay";
 
@@ -15,7 +15,7 @@ const wrapComponent = (Comp) => (
       callback: PropTypes.func,
       formMessages: PropTypes.object,
       isOpen: PropTypes.bool,
-      token: PropTypes.string,
+      // token: PropTypes.string,
       type: PropTypes.string,
       uniqueId: PropTypes.string
     }
@@ -64,8 +64,8 @@ const wrapComponent = (Comp) => (
         });
         return;
       }
-
-      Accounts.resetPassword(this.props.token, password, (error) => {
+      const { token } = Router.current().params;
+      Accounts.resetPassword(token, password, (error) => {
         if (error) {
           this.setState({
             isDisabled: false,
@@ -76,15 +76,15 @@ const wrapComponent = (Comp) => (
         } else {
           // Now that Meteor.users is verified, we should do the same with the Accounts collection
           Meteor.call("accounts/verifyAccount");
-
-          this.props.callback();
-
           this.setState({
-            isOpen: !this.state.isOpen
+            isLoading: false,
+            isDisabled: true,
+            formMessages: {
+              info: [{
+                reason: i18next.t("accountsUI.info.passwordResetDone") || "Password reset complete."
+              }]
+            }
           });
-
-          const shopId = Reaction.getUserPreferences("reaction", "activeShopId");
-          Reaction.setShopId(shopId);
         }
       });
     }
